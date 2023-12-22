@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 
 // Create a new JSON Server instance
 const server = jsonServer.create();
-const router = jsonServer.router('db.json'); // You can provide an empty object if you don't want to use db.json
 const middlewares = jsonServer.defaults();
 
 // Use default middlewares (CORS, static, etc.)
@@ -12,11 +11,12 @@ server.use(middlewares);
 server.use(bodyParser.json());
 
 // Add custom authentication logic here
-server.post('/auth', (req, res) => {
+server.get('/auth', (req, res) => {
   // Your authentication logic goes here
   // Example: Check username and password from request body
-  console.log(req.body)
-  // const { username, password } = req.body;
+
+  console.log("HELLO")
+  console.log(req.query);
 
   // Your authentication logic...
 
@@ -29,9 +29,6 @@ server.post('/auth', (req, res) => {
     res.status(401).jsonp({ error: 'Unauthorized' });
   }
 });
-
-// Use the JSON Server router
-server.use(router);
 
 // Set port (default: 3000). For Heroku, use the port set by the environment variable $PORT
 const port = process.env.PORT || 3000;
